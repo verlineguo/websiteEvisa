@@ -110,11 +110,12 @@ Route::controller(VisaApplicantController::class)->prefix('admin/visaApplicant')
 });
 
 Route::controller(ApplicantSideController::class)->prefix('applicant')->group(function () {
-    Route::get('home',  'home')->name('applicant.home');
-    Route::get('pengajuan-visa/upload-data-pribadi',  'uploadDP')->name('applicant.uploadDP');
-    Route::post('pengajuan-visa/upload-data-pribadi/store/{idApplicant}',  'storeApplicant')->name('applicant.uploadDP.store');
-    Route::get('pengajuan-visa/upload-keterangan-visa', 'uploadKV')->name('applicant.uploadKV');
-    Route::get('pengajuan-visa/upload-done', 'done')->name('applicant.upload-done');
+    Route::get('home',  [ApplicantSideController::class, 'home'])->name('applicant.home');
+    Route::get('pengajuan-visa/upload-data-pribadi', [ApplicantSideController::class,  'uploadDP'])->name('applicant.uploadDP');
+    Route::post('pengajuan-visa/upload-data-pribadi/store/{idApplicant}', [ApplicantSideController::class, 'storeApplicant'])->name('applicant.uploadDP.store');
+    Route::get('pengajuan-visa/upload-keterangan-visa', [ApplicantSideController::class, 'uploadKV'])->name('applicant.uploadKV');
+    Route::post('pengajuan-visa/upload-keterangan-visa/store', [ApplicantSideController::class, 'storeKV'])->name('applicant.storeKV');
+    Route::get('pengajuan-visa/upload-done', [ApplicantSideController::class, 'done'])->name('applicant.upload-done');
     Route::get('status-pengajuan', action: 'statusPengajuan')->name('applicant.status-pengajuan');
     Route::get('pembayaran-visa', 'pembayaranVisa')->name('applicant.pembayaran-visa');
 });

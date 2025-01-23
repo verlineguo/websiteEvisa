@@ -8,7 +8,7 @@
             @foreach ([ 
                 'applicant.uploadDP' => 'Data Pribadi', 
                 'applicant.upload-document.create' => 'Upload Dokumen', 
-                'applicant.review' => 'Review Data', 
+                'applicant.review' => 'Keterangan Visa', 
                 'applicant.payment' => 'Pembayaran', 
                 'applicant.confirmation' => 'Konfirmasi' 
             ] as $route => $label)

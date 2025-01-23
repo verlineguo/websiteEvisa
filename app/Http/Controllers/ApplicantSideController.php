@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Visa;
+use App\Models\Country;
+use App\Models\DocType;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\VisaApplicant;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Models\DocType;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class ApplicantSideController extends Controller
@@ -25,12 +30,15 @@ class ApplicantSideController extends Controller
         $applicantSide = Auth::guard('customer')->user(); 
         return view('applicant.upload-data-pribadi', compact('applicantSide'));
     }
-
-    // public function uploadKV()
-    // {
-    //     $country = Country::all()->toArray();
-    //     return view('applicant.upload-keterangan-visa', ['country' => $country]);
-    // }
+    
+    public function uploadKV()
+    {
+        $applicantSide = Auth::guard('customer')->user();
+        $applicant = Applicant::all();
+        $countries = Country::all();
+        $visa = Visa::all();
+        return view('applicant.upload-keterangan-visa', ['applicant' => $applicant, 'countries' => $countries, 'visa' => $visa], compact('applicantSide'));
+    }
 
     public function uploadDoc()
     {
@@ -76,10 +84,10 @@ class ApplicantSideController extends Controller
                     $filePath,
                 ]);
             }
-            dd($uploadedDocuments);
+            // dd($uploadedDocuments);
 
     
-            return redirect()->route('applicant.upload-document.create')->with('success', 'Dokumen berhasil diunggah.')->with('uploadedDocuments', $uploadedDocuments);
+            return redirect()->route('applicant.uploadKV')->with('success', 'Dokumen berhasil diunggah.')->with('uploadedDocuments', $uploadedDocuments);
         } catch (\Exception $e) {
             return redirect()->back()->with('fail', $e->getMessage());
         }
@@ -142,5 +150,43 @@ class ApplicantSideController extends Controller
             return redirect()->route('applicant.uploadDP')->with('fail', $e->getMessage());
         }
     }
+
+    public function storeKV(Request $request){
+        // Validasi input
+        $request->validate([
+            'jenis-visa' => 'required|string',
+            'departure-date' => 'required|date',
+            'arrival-date' => 'required|date|after:departure-date'
+        ]);
+
+        // Ambil ID pelamar
+        $idApplicant = Auth::guard('customer')->user()->idApplicant;
+
+        // Parsing tanggal
+        $departureDate = Carbon::parse($request->input('departure-date'));
+        $arrivalDate = Carbon::parse($request->input('arrival-date'));
+        $lengthOfStay = $departureDate->diffInDays($arrivalDate);
+
+        try {
+            // Panggil stored procedure
+            DB::statement('CALL SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
+                $idApplicant,
+                $request->input('jenis-visa'),
+                $arrivalDate,
+                $departureDate,
+                $lengthOfStay,
+                null, 
+                null
+            ]);
+
+            // Redirect dengan pesan sukses
+            return redirect()->route('applicant.uploadKV')->with('success', 'Keterangan visa berhasil disimpan');
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()]);
+        }
+        
+    }
+
 
 }
