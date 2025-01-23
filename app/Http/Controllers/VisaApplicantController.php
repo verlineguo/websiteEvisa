@@ -48,7 +48,7 @@ class VisaApplicantController extends Controller
     {
         Log::info('Data Form:', $request->all()); 
     
-        DB::statement('EXEC SP_createVisaApplicant ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
             $request->idApplicant,
             $request->idFee,
             $request->dateOfArrival,
@@ -79,7 +79,7 @@ class VisaApplicantController extends Controller
 
     public function update(Request $request, $idVisa)
     {
-        DB::statement('EXEC SP_updateVisaApplicant ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_updateVisaApplicant (?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $idVisa,
             $request->idApplicant,
             $request->jenisVisa,
@@ -96,7 +96,7 @@ class VisaApplicantController extends Controller
 
     public function delete($idVisa)
     {
-        DB::statement('EXEC SP_DeleteVisaApplicant ?', [$idVisa]);
+        DB::statement('CALL SP_DeleteVisaApplicant (?)', [$idVisa]);
         return redirect()->route('admin.visaApplicant.index')->with('success', 'Visa application deleted successfully.');
     }
 

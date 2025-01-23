@@ -23,12 +23,10 @@ class CountryController extends Controller
 
     public function save(Request $request)
     {
-        DB::statement('EXEC SP_createCountry ?', [
+        DB::statement('CALL SP_createCountry (?)', [
             $request->countryName,
             
         ]);
-
-       
 
         return redirect()->route('admin.country.index')->with('success', 'Country added successfully.');
     }

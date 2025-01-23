@@ -4,7 +4,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Applicant</h6>
+        <h6 class="m-0 font-weight-bold text-primary mb-1">Data Applicant</h6>
         <a href="{{ route('admin.visaApplicant.create') }}" class="btn btn-primary">Add Visa Applicant</a>
     </div>
     <div class="card-body">
@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>nama</th>
+                        <th>Name</th>
                         <th>Visa Type</th>
                         <th>Date of Arrival</th>
                         <th>Date of Departure</th>

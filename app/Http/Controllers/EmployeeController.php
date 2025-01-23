@@ -24,7 +24,7 @@ class EmployeeController extends Controller
     public function save(request $request)
     {
         
-        DB::statement('EXEC SP_createEmployee ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_createEmployee (?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $request->name,
             $request->username,
             bcrypt($request->password),
@@ -47,7 +47,7 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $idEmp)
     {
-        DB::statement('EXEC SP_updateEmployee ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_updateEmployee (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $idEmp,
             $request->name,
             $request->username,
@@ -62,9 +62,10 @@ class EmployeeController extends Controller
 
         return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
     }
+    
     public function delete($idEmp)
     {
-        DB::statement('EXEC SP_deleteEmployee ?', [$idEmp]);
+        DB::statement('CALL SP_deleteEmployee (?)', [$idEmp]);
         return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully.');
     }
 

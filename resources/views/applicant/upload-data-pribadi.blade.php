@@ -42,8 +42,6 @@
     @endif
     @if(Session::has('fail'))
         <span class="alert alert-danger p2 px-32">{{ Session::get('fail') }}</span>
-    @elseif(Session::has('success'))
-        <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
     @endif
 
 

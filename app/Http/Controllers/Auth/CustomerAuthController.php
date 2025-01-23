@@ -27,7 +27,7 @@ class CustomerAuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ])->validate();
 
-        DB::statement('EXEC SP_createApplicant ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_createApplicant (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $request->name,
             $request->username,
             bcrypt($request->password),  
