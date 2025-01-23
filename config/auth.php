@@ -36,9 +36,8 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'employee' => [
             'driver' => 'session',
-<<<<<<< HEAD
             'provider' => 'employees',
 <<<<<<< Updated upstream
         ],
@@ -47,9 +46,6 @@ return [
             'provider' => 'customers',
 =======
 >>>>>>> Stashed changes
-=======
-            'provider' => 'users',
->>>>>>> parent of 4cc3d70 (semua :))
         ],
     ],
 
@@ -71,9 +67,8 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'employees' => [
             'driver' => 'eloquent',
-<<<<<<< HEAD
             'model' => App\Models\Employee::class,
 <<<<<<< Updated upstream
         ],
@@ -83,9 +78,6 @@ return [
             'model' => App\Models\Applicant::class,
 =======
 >>>>>>> Stashed changes
-=======
-            'model' => env('AUTH_MODEL', App\Models\User::class),
->>>>>>> parent of 4cc3d70 (semua :))
         ],
 
         // 'users' => [
