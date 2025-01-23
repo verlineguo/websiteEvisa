@@ -8,15 +8,7 @@
             <h3 class="text-center">Detail Visa Applicant</h3>
         </div>
         <div class="card-body">
-<<<<<<< Updated upstream
-            
-=======
-            <div class="row mb-2">
-                <div class="col-sm-4"><strong>ID Visa Applicant:</strong></div>
-                <div class="col-sm-8">{{ $visaApplicant->VisaID }}</div>
-            </div>
-            <hr>
->>>>>>> Stashed changes
+
             <div class="row mb-2">
                 <div class="col-sm-4"><strong>Applicant Name:</strong></div>
                 <div class="col-sm-8">{{ $visaApplicant->ApplicantName }}</div>
@@ -69,13 +61,9 @@
         </div>
         <div class="card-footer">
             <a href="{{ route('admin.visaApplicant.index') }}" class="btn btn-secondary">Back to List</a>
-<<<<<<< Updated upstream
             <a href="{{ route('admin.visaApplicant.documents', $visaApplicant->idVisa) }}" class="btn btn-info">View Documents</a>            
             <a href="{{ route('admin.visaApplicant.applicationProcess', $visaApplicant->idVisa) }}" class="btn btn-warning">View Application Process</a>
-=======
-            <!-- <a href="{{ route('admin.visaApplicant.documents', $visaApplicant->VisaID) }}" class="btn btn-info">View Documents</a>            
-            <a href="{{ route('admin.visaApplicant.applicationProcess', $visaApplicant->VisaID) }}" class="btn btn-warning">View Application Process</a> -->
->>>>>>> Stashed changes
+
         </div>
     </div>
 </div>

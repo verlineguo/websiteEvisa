@@ -39,13 +39,10 @@ return [
         'employee' => [
             'driver' => 'session',
             'provider' => 'employees',
-<<<<<<< Updated upstream
         ],
         'customer' => [
             'driver' => 'session',
             'provider' => 'customers',
-=======
->>>>>>> Stashed changes
         ],
     ],
 
@@ -70,14 +67,12 @@ return [
         'employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
-<<<<<<< Updated upstream
         ],
 
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Applicant::class,
-=======
->>>>>>> Stashed changes
+
         ],
 
         // 'users' => [

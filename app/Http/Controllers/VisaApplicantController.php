@@ -19,11 +19,7 @@ class VisaApplicantController extends Controller
         $user = Auth::guard('employee')->user();
 
         if (!$user) {
-<<<<<<< Updated upstream
             return redirect()->route('employee.login')->with('error', 'You must be logged in to access this page.');
-=======
-            return redirect()->route('login')->with('error', 'You must be logged in to access this page.');
->>>>>>> Stashed changes
         }
 
         if ($user->role == 1) { 
@@ -121,7 +117,6 @@ class VisaApplicantController extends Controller
         ]);
     }    
 
-<<<<<<< Updated upstream
     public function detail($idVisa)
     {
         $visaApplicant = DB::table('view_VisaDetail')->where('idVisa', $idVisa)->first();
@@ -145,6 +140,4 @@ class VisaApplicantController extends Controller
         return view('admin.visaApplicant.applicationProcess', compact('application Processes'));
     }
 
-=======
->>>>>>> Stashed changes
 }

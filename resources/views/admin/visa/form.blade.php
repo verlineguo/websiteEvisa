@@ -14,10 +14,7 @@
             <h6 class="m-0 font-weight-bold text-primary">{{ isset($visa) ? 'Form Edit Visa' : 'Form Add Visa' }}</h6>
           </div>
           <div class="card-body">
-            <div class="form-group">
-              <label for="idFee">Id Fee</label>
-              <input type="text" class="form-control" id="idFee" name="idFee" value="{{ old('idFee', isset($visa) ? $visa->idFee : '') }}" readonly>
-              </div>
+          
             <div class="form-group">
                 <label for="jenisVisa">Jenis Visa</label>
                 <input type="text" class="form-control" id="jenisVisa" name="jenisVisa" value="{{ old('jenisVisa', isset($visa) ? $visa->jenisVisa : '') }}">

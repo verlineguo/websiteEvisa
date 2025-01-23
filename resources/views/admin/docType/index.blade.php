@@ -20,9 +20,7 @@
                 </thead>
                 <tbody>
                     @php($no = 1)
-                    @php
-    dd($docType);
-@endphp
+                    
 
                     @foreach ($docType as $row)
                     <tr>

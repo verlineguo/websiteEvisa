@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmployeeAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicantController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CountryController;
@@ -42,29 +41,6 @@ Route::middleware(['auth:customer'])->group(function () {
     Route::get('/applicant/home',[ApplicantSideController::class, 'home'])
     ->name('applicant.home');
 });
-=======
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\VisaApplicantController;
-use App\Http\Controllers\VisaController;
-
-
-Route::get('', [EmployeeAuthController::class, 'showLoginForm'])->name('login.form'); 
-Route::post('login', [EmployeeAuthController::class, 'login'])->name('login'); 
-Route::post('logout', [EmployeeAuthController::class, 'logout'])->name('logout'); 
-
-Route::middleware(['auth:employee'])->group(function () {
-    // Dashboard untuk Admin
-    Route::get('admin/dashboard',[DashboardController::class, 'adminDashboard'])
-    ->name('admin.dashboard');
-
-    // Dashboard untuk Consultant
-    Route::get('consultant/dashboard',[DashboardController::class, 'consultantDashboard'])
-    ->name('consultant.dashboard');
-
-});
-
->>>>>>> Stashed changes
 
 Route::controller(ApplicantController::class)->prefix('admin/applicant')->group(function () {
     Route::get('', 'index')->name('admin.applicant.index');
@@ -96,7 +72,6 @@ Route::controller(CountryController::class)->prefix('admin/country')->group(func
     Route::delete('delete/{idCountry}', 'delete')->name('admin.country.delete');
 });
 
-<<<<<<< Updated upstream
 Route::controller(DocTypeController::class)->prefix('admin/docType')->group(function () {
     Route::get('', 'index')->name('admin.docType.index');
     Route::get('create', 'create')->name('admin.docType.create');
@@ -105,8 +80,6 @@ Route::controller(DocTypeController::class)->prefix('admin/docType')->group(func
     Route::put('edit/{idDoc}', 'update')->name('admin.docType.create.update');
     Route::delete('delete/{idDoc}', 'delete')->name('admin.docType.delete');
 });
-=======
->>>>>>> Stashed changes
 
 Route::controller(VisaController::class)->prefix('admin/visa')->group(function () {
     Route::get('', 'index')->name('admin.visa.index');
@@ -132,15 +105,10 @@ Route::controller(VisaApplicantController::class)->prefix('admin/visaApplicant')
     Route::get('detail/{idVisa}', 'detail')->name('admin.visaApplicant.detail');
     Route::get('documents/{idVisa}', 'viewDocuments')->name('admin.visaApplicant.documents');
     Route::get('showApplicationProcess/{idVisa}', 'showApplicationProcess')->name('admin.visaApplicant.applicationProcess');
-<<<<<<< Updated upstream
-=======
-    Route::get('getVisasByCountry/{idCountry}', 'getVisasByCountry')->name('admin.visaApplicant.getVisasByCountry');
->>>>>>> Stashed changes
     Route::get('checkName', 'checkName')->name('admin.visaApplicant.checkName');
 
 });
 
-<<<<<<< Updated upstream
 Route::controller(ApplicantSideController::class)->prefix('applicant')->group(function () {
     Route::get('home',  'home')->name('applicant.home');
     Route::get('pengajuan-visa/upload-data-pribadi',  'uploadDP')->name('applicant.uploadDP');
@@ -175,7 +143,3 @@ Route::middleware(['auth:customer'])->prefix('applicant')->group(function () {
 });
 
 
-=======
-
-Route::controller()
->>>>>>> Stashed changes
