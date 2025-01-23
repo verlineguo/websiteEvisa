@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+<<<<<<< Updated upstream
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Authenticatable
+=======
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Applicant extends Model
+>>>>>>> Stashed changes
 {
     use HasFactory;
 

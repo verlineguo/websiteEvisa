@@ -90,7 +90,11 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <!-- Form logout -->
+<<<<<<< Updated upstream
                 <form id="logout-form" action="{{ route('employee.logout') }}" method="POST" style="display: none;">
+=======
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+>>>>>>> Stashed changes
                     @csrf
                 </form>
                 <!-- Tombol Logout -->

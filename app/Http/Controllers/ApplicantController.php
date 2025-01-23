@@ -13,11 +13,21 @@ use Illuminate\Support\Facades\Log;
 class ApplicantController extends Controller
 {
     public function index() 
+<<<<<<< Updated upstream
     {
         $user = Auth::guard('employee')->user();
         if (!$user) {
             return redirect()->route('customer.login')->with('error', 'You must be logged in to access this page.');
         }
+=======
+{
+        $user = Auth::guard('employee')->user();
+
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'You must be logged in to access this page.');
+        }
+
+>>>>>>> Stashed changes
         if ($user->role == 1) { 
             $applicant = Applicant::all()->toArray();
             return view('admin.applicant.index', ['applicant' => $applicant]);
@@ -27,7 +37,11 @@ class ApplicantController extends Controller
         } else {
             return redirect()->route('home')->with('error', 'Unauthorized access');
         }
+<<<<<<< Updated upstream
     }
+=======
+}
+>>>>>>> Stashed changes
 public function create()
     {
         return view('admin.applicant.form');

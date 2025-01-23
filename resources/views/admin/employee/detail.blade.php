@@ -21,7 +21,11 @@
         </div>
         <div class="card-footer">
             <a href="{{ route('admin.applicant.index') }}" class="btn btn-secondary">Back to List</a>
+<<<<<<< Updated upstream
             <a href="{{ route('admin.applicant.documents', $visaApplicant->idVisa) }}" class="btn btn-info">View Payment</a>            
+=======
+            <a href="{{ route('admin.applicant.documents', $visaApplicant->VisaID) }}" class="btn btn-info">View Payment</a>            
+>>>>>>> Stashed changes
         </div>
     </div>
 </div>

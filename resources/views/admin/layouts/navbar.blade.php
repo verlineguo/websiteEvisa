@@ -188,7 +188,11 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
+<<<<<<< Updated upstream
                                 <a class="dropdown-item" action="{{ route('employee.logout') }}" data-toggle="modal" data-target="#logoutModal">
+=======
+                                <a class="dropdown-item" action="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+>>>>>>> Stashed changes
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

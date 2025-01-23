@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Validator;
 use App\Models\Applicant;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,36 @@ class CustomerAuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('applicant.home')->with('success', 'Login berhasil.');
         }
+=======
+
+class CustomerAuthController extends Controller
+{
+    public function register()
+    {
+        return view('auth/register');
+    }
+    // Menampilkan form login
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    // Proses login
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
+        if (Auth::guard('employee')->attempt($credentials)) {
+            $request->session()->regenerate();
+            $employee = Auth::guard('employee')->user(); // Get the authenticated employee
+            if ($employee->role == 1) { // idRole 1 untuk admin
+                return redirect()->route('admin.dashboard');
+            } elseif ($employee->role == 2) { // idRole 2 untuk consultant
+                return redirect()->route('consultant.dashboard');
+            }
+
+            return redirect('/')->with('error', 'Role tidak dikenali.');
+        } 
+>>>>>>> Stashed changes
 
         return redirect()->back()->with('error', 'Username atau password salah.');
 
@@ -63,7 +94,11 @@ class CustomerAuthController extends Controller
 
     public function logout()
     {
+<<<<<<< Updated upstream
         Auth::guard('customer')->logout(); 
+=======
+        Auth::guard('employee')->logout(); // Use the employee guard for logout
+>>>>>>> Stashed changes
         request()->session()->invalidate();
         request()->session()->regenerate();
         return redirect()->to('/');

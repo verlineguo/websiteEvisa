@@ -41,7 +41,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
+<<<<<<< Updated upstream
                                 <form method="POST" action="{{ route('employee.login') }}">
+=======
+                                <form method="POST" action="{{ route('login') }}">
+>>>>>>> Stashed changes
                                     @csrf
                                         <div class="form-group">
                                         

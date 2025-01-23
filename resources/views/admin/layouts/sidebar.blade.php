@@ -27,8 +27,11 @@
                 <a class="collapse-item" href="{{ route('admin.employee.index') }}">Employee</a>
                 <a class="collapse-item" href="{{ route('admin.country.index') }}">Country</a>
                 <a class="collapse-item" href="{{ route('admin.visa.index') }}">Visa</a>
+<<<<<<< Updated upstream
                 <a class="collapse-item" href="{{ route('admin.docType.index') }}">Doc Type</a>
 
+=======
+>>>>>>> Stashed changes
             </div>
         </div>
     </li>

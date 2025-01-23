@@ -13,9 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement("
+<<<<<<< Updated upstream
             CREATE VIEW view_VisaDetail AS
             SELECT 
                 va.idVisa,
+=======
+            CREATE VIEW viewVisaDetail AS
+            SELECT 
+>>>>>>> Stashed changes
                 a.name AS ApplicantName,
                 a.dob AS DateOfBirth,
                 v.jenisVisa AS VisaType,
@@ -25,7 +30,11 @@ return new class extends Migration
                 va.dateOfDeparture AS DepartureDate,
                 va.lengthOfStay AS LengthOfStay,
                 va.prevCountry AS PreviousCountry,
+<<<<<<< Updated upstream
                 va.expDate AS ExpirationDate
+=======
+                va.expDate AS ExpirationDate,
+>>>>>>> Stashed changes
             FROM 
                 visa_applicant va
             INNER JOIN 
