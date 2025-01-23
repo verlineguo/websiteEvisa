@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Applicant extends Model
 >>>>>>> Stashed changes
+=======
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Applicant extends Model
+>>>>>>> parent of 4cc3d70 (semua :))
 {
     use HasFactory;
 

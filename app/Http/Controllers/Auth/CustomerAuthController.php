@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Validator;
 use App\Models\Applicant;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +56,6 @@ class CustomerAuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('applicant.home')->with('success', 'Login berhasil.');
         }
-=======
 
 class CustomerAuthController extends Controller
 {
