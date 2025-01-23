@@ -18,9 +18,10 @@
     <main>
       <div class="mt-16">
         @yield('content')
+        
       </div>
     </main>
 </div>
-  
+@yield('scripts');
 </body>
 </html>

@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('application_process', function (Blueprint $table) {
-            $table->id();
             $table->string('noAppProcess', 8)->primary();
             $table->string('idEmp', 50);
             $table->string('idVisa', 50);
