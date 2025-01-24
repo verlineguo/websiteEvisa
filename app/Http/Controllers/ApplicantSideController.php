@@ -171,7 +171,7 @@ class ApplicantSideController extends Controller
         $lengthOfStay = $departureDate->diffInDays($arrivalDate);
 
         try {
-            DB::statement('EXEC SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
                 $idApplicant,
                 $request->input('jenis-visa'),
                 $arrivalDate,
@@ -223,7 +223,7 @@ class ApplicantSideController extends Controller
         }
 
 
-        $result = DB::statement('EXEC SP_createPayment :idApplicant, :paymentStatus', [
+        $result = DB::statement('CALL SP_createPayment (:idApplicant, :paymentStatus)', [
             'idApplicant' => $idApplicant,
             'paymentStatus' => $paymentStatus,
         ]);
