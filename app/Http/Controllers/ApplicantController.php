@@ -28,7 +28,7 @@ class ApplicantController extends Controller
             return redirect()->route('home')->with('error', 'Unauthorized access');
         }
     }
-public function create()
+    public function create()
     {
         return view('admin.applicant.form');
     }

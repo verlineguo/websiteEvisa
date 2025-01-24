@@ -21,7 +21,7 @@ class MainDocumentController extends Controller
         if ($user && $user->role === 'admin') {
             return view('admin.document.index', compact('documents'));
         } elseif ($user && $user->role === 'consultant') {
-            return view('consultant.document.index', compact('documents'));
+            return view('consultant.mainDocument.index', compact('documents'));
         }
 
         return redirect()->route('home')->with('fail', 'You do not have permission to access this page.');
@@ -38,7 +38,11 @@ class MainDocumentController extends Controller
         }
     }
 
-    
+    public function consultantIndex() 
+    {
+        $documents = mainDocument::with('docType')->get();
+        return view('consultant.mainDocument.index', compact('documents'));
+    }
 
     public function adminCreate()
     {

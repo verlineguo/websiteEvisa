@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\ApplicantSideController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VisaController;
 
-use App\Http\Controllers\Auth\EmployeeAuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ApplicantController;
-use App\Http\Controllers\Auth\CustomerAuthController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DocTypeController;
-use App\Http\Controllers\VisaApplicantController;
-use App\Http\Controllers\VisaController;
-use App\Http\Controllers\MainDocumentController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MainDocumentController;
+use App\Http\Controllers\ApplicantSideController;
+use App\Http\Controllers\VisaApplicantController;
+use App\Http\Controllers\Auth\CustomerAuthController;
+use App\Http\Controllers\Auth\EmployeeAuthController;
+use App\Http\Controllers\ApplicationProcessController;
 
 Route::controller(EmployeeAuthController::class)->prefix('employee')->group(function () {
     Route::get('login', 'showLoginForm')->name('employee.login.form');
@@ -144,6 +145,33 @@ Route::middleware(['auth:employee'])->prefix('consultant/document')->group(funct
     Route::post('approve/{documentNo}', [MainDocumentController::class, 'approveDocument'])->name('consultant.document.approve');
 
 });
+
+/* -- perubahan oleh Kevin -- */
+
+Route::controller(ApplicationProcessController::class)->prefix('consultant/applicationProcess')->group(function () {
+    Route::get('', 'index')->name('consultant.applicationProcess.index');
+    Route::get('edit/{noAppProcess}', 'edit')->name('consultant.applicationProcess.edit');
+    Route::post('edit/{noAppProcess}', 'update')->name('consultant.applicationProcess.update');
+    
+});
+
+Route::controller(DashboardController::class)->prefix('consultant')->group(function () {
+    Route::get('','consultantDashboard')->name('consultant.dashboard');
+
+});
+
+Route::controller(DashboardController::class)->prefix('admin')->group(function () {
+    Route::get('','adminDashboard')->name('admin.dashboard');
+
+});
+
+Route::controller(MainDocumentController::class)->prefix('consultant/mainDocument')->group(function () {
+    Route::get('', 'consultantIndex')->name('consultant.mainDocument.index');
+    
+    
+});
+
+/* -- perubahan oleh Kevin -- */
 
 
 
