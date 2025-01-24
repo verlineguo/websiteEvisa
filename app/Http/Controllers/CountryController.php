@@ -27,9 +27,7 @@ class CountryController extends Controller
             $request->countryName,
             
         ]);
-
-       
-
+        
         return redirect()->route('admin.country.index')->with('success', 'Country added successfully.');
     }
 

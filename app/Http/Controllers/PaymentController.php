@@ -3,41 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\VisaApplicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 
 class PaymentController extends Controller
 {
     public function index()
     {
-        // $payment = Payment::all()->toArray();
-        return view('admin.payment.index'); // ['payment' => $payment]
-        
+        $paymentDetails = DB::table('View_PaymentDetails')->get();
+
+        return view('admin.payment.index', ['paymentDetails' => $paymentDetails]);
     }
 
-    public function store(Request $request)
+    public function edit($idPayment)
     {
-      
-        $request->validate([
-            'idVisa' => 'required|exists:VisaApplicant,idVisa',
-            'amount' => 'required|numeric',
-            'paymentStatus' => 'required|boolean',
-        ]);
+        $visaApplicant = VisaApplicant::all();
+        $payment = Payment::with('visaApplicant')->find($idPayment); 
+        if (!$payment) {
+            return redirect()->route('admin.payment.index')->with('error', 'Payment not found');
+        }
+        return view('admin.payment.form', ['payment' => $payment, 'visaApplicant' => $visaApplicant]);
+    }
 
-        $payment = Payment::create([
-            'idVisa' => $request->idVisa,
-            'amount' => $request->amount,
-            'paymentStatus' => $request->paymentStatus,
-            'paymentDate' => now(),
+    public function updateStatus(Request $request, $idPayment)
+    {
+        $request->validate([
+            'paymentStatus' => 'required|boolean', 
         ]);
-        if ($payment->paymentStatus == 1) {
-            
-            return response()->json([
-                'message' => 'Pembayaran berhasil, status visa akan diperbarui.',
-                'payment' => $payment,
-            ]);
+        $payment = Payment::find($idPayment); 
+        if (!$payment) {
+            return redirect()->back()->with('error', 'Payment not found');
         }
 
-        return response()->json(['message' => 'Pembayaran berhasil, tetapi belum diverifikasi.'], 200);
+        $status = $request->input('paymentStatus');
+        DB::statement('EXEC UpdatePaymentStatus ?, ?', [$idPayment, $status]);
+
+        return redirect()->back()->with('success', 'Payment status updated successfully');
+    }
+
+    public function delete($idPayment)
+    {
+        $payment = Payment::find($idPayment);
+        $payment->delete();
+
+        return redirect()->route('admin.payment.index')->with('success', 'Payment deleted successfully.');
     }
 }

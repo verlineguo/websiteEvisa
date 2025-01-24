@@ -109,12 +109,17 @@ Route::controller(VisaApplicantController::class)->prefix('admin/visaApplicant')
     Route::get('checkName', 'checkName')->name('admin.visaApplicant.checkName');
     
 });
+Route::put('admin/payment/update-status/{idPayment}', [PaymentController::class, 'updateStatus'])
+    ->name('admin.payment.updateStatus');
+
 
 Route::controller(PaymentController::class)->prefix('admin/payment')->group(function () {
     Route::get('', 'index')->name('admin.payment.index');
-    Route::get('edit/{idPayment}', 'edit')->name('admin.payment.edit');
-    Route::put('edit/{idPayment}', 'update')->name('admin.payment.create.update');
+    Route::get('edit{idPayment}', 'edit')->name('admin.payment.edit'); 
+    Route::put('updateStatus/{idPayment}', 'updateStatus')->name('admin.payment.updateStatus');
+    Route::delete('delete/{idPayment}', 'delete')->name('admin.payment.delete');
 });
+
 
 
 Route::controller(ApplicantSideController::class)->prefix('applicant')->group(function () {
