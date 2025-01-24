@@ -5,7 +5,7 @@
       @foreach ([ 
           'applicant.uploadDP' => 'Data Pribadi', 
           'applicant.upload-document.create' => 'Upload Dokumen', 
-          'applicant.review' => 'Keterangan Visa', 
+          'applicant.uploadKV' => 'Keterangan Visa', 
           'applicant.payment' => 'Pembayaran', 
           'applicant.confirmation' => 'Konfirmasi' 
       ] as $route => $label)
@@ -22,7 +22,32 @@
       @endforeach
   </div>
 </div>
+<div class="flex items-center justify-end px-28">
+        <a href="{{ route('applicant.pembayaran-visa') }}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white bg-blue-500 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        Selanjutnya &raquo;
+        </a>
+    </div>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger p2 px-32 text-red-500 text-xl">
+        {{ Session::get('error') }}
+    </div>
+    @elseif(Session::has('fail'))
+        <span class="alert alert-danger p2 px-32 text-red-500 text-xl">{{ Session::get('fail') }}</span>
+    @elseif(Session::has('success'))
+        <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
+    @endif
 <div class="px-32 py-8">
+
     <form action="{{ route('applicant.storeKV') }}" method="POST">
         @csrf
         <div class="border-b border-gray-900/10 pb-12">
@@ -60,9 +85,16 @@
             </div>
         </div>
     
-        <div class="mt-6 flex items-center justify-end px-16">
-            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Simpan</button>
-        </div>
+        
+        <div class="mt-8 flex justify-between">
+                <a href="{{ route('applicant.upload-document.create') }}" class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    Kembali
+                </a>
+
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Simpan
+                </button>
+            </div>
     </form>
 </div>
 @endsection

@@ -31,15 +31,7 @@ class ApplicantSideController extends Controller
         return view('applicant.upload-data-pribadi', compact('applicantSide'));
     }
     
-    public function uploadKV()
-    {
-        $applicantSide = Auth::guard('customer')->user();
-        $applicant = Applicant::all();
-        $countries = Country::all();
-        $visa = Visa::all();
-        return view('applicant.upload-keterangan-visa', ['applicant' => $applicant, 'countries' => $countries, 'visa' => $visa], compact('applicantSide'));
-    }
-
+    
     public function uploadDoc()
     {
         $docType = DocType::all();
@@ -151,6 +143,17 @@ class ApplicantSideController extends Controller
         }
     }
 
+    public function uploadKV()
+    {
+        $applicantSide = Auth::guard('customer')->user();
+        $applicant = Applicant::all();
+        $countries = Country::all();
+        $visa = Visa::all();
+        return view('applicant.upload-keterangan-visa', ['applicant' => $applicant, 'countries' => $countries, 'visa' => $visa], compact('applicantSide'));
+    }
+
+    
+
     public function storeKV(Request $request){
         // Validasi input
         $request->validate([
@@ -168,25 +171,67 @@ class ApplicantSideController extends Controller
         $lengthOfStay = $departureDate->diffInDays($arrivalDate);
 
         try {
-            // Panggil stored procedure
-            DB::statement('CALL SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('EXEC SP_createVisaApplicant (?, ?, ?, ?, ?, ?, ?)', [
                 $idApplicant,
                 $request->input('jenis-visa'),
                 $arrivalDate,
                 $departureDate,
                 $lengthOfStay,
                 null, 
-                null
+                null,
             ]);
 
-            // Redirect dengan pesan sukses
             return redirect()->route('applicant.uploadKV')->with('success', 'Keterangan visa berhasil disimpan');
         } catch (\Exception $e) {
-            // Tangani kesalahan
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()]);
         }
         
     }
 
+    public function showPaymentForm()
+    {
+        $applicantSide = Auth::guard('customer')->user(); 
 
+        $idApplicant = Auth::guard('customer')->user()->idApplicant;
+        $visaDetails = VisaApplicant::with('visa')
+        ->where('idApplicant', $idApplicant)
+        ->first();
+
+
+        if (!$visaDetails) {
+            return redirect()->route('applicant.home')->with('error', 'Visa tidak ditemukan!');
+        }
+        $visaFee = $visaDetails->visa->fee;
+        $tax = 0.1 * $visaFee;
+        $totalAmount = $visaFee + $tax;
+
+
+        return view('applicant.pembayaran-visa', compact('visaDetails', 'visaFee', 'tax', 'totalAmount', 'applicantSide'));
+
+    }
+    public function createPayment()
+    {
+        $idApplicant = Auth::guard('customer')->user()->idApplicant;
+        $paymentStatus = 0; 
+        $existingPayment = DB::table('Payment')
+        ->join('visa_applicant', 'Payment.idVisa', '=', 'visa_applicant.idVisa')
+        ->where('visa_applicant.idApplicant', $idApplicant)
+        ->first();
+
+        if ($existingPayment) {
+            return redirect()->route('applicant.pembayaran-visa')->with('error', 'Pembayaran sudah dilakukan.');
+        }
+
+
+        $result = DB::statement('EXEC SP_createPayment :idApplicant, :paymentStatus', [
+            'idApplicant' => $idApplicant,
+            'paymentStatus' => $paymentStatus,
+        ]);
+
+        if ($result) {
+            return redirect()->route('applicant.pembayaran-visa')->with('success', 'Payment berhasil dibuat!');
+        } else {
+            return redirect()->route('applicant.pembayaran-visa')->with('error', 'Gagal membuat pembayaran.');
+        }    
+    }
 }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('dateOfArrival');
             $table->date('dateOfDeparture');
             $table->integer('lengthOfStay');
-            $table->string('prevCountry', 50);
-            $table->date('expDate');
+            $table->string('prevCountry', 50)->nullable();
+            $table->date('expDate')->nullable();
             $table->foreign('idApplicant')->references('idApplicant')->on('Applicant')->onDelete('cascade');
             $table->foreign('idFee')->references('idFee')->on('Visa')->onDelete('cascade');
         });

@@ -40,8 +40,12 @@
             </ul>
         </div>
     @endif
-    @if(Session::has('fail'))
-        <span class="alert alert-danger p2 px-32">{{ Session::get('fail') }}</span>
+    @if(Session::has('error'))
+    <div class="alert alert-danger p2 px-32 text-red-500 text-xl">
+        {{ Session::get('error') }}
+    </div>
+    @elseif(Session::has('fail'))
+        <span class="alert alert-danger p2 px-32 text-red-500 text-xl">{{ Session::get('fail') }}</span>
     @elseif(Session::has('success'))
         <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
     @endif
@@ -154,7 +158,7 @@
     
       
         <div class="mt-6 flex items-center justify-end py-8">
-          <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit">Simpan</button>
+          <button class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400" type="submit">Simpan</button>
         </div>
       </form>
     </div>

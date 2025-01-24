@@ -68,7 +68,7 @@ class EmployeeController extends Controller
         return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully.');
     }
 
-    // Controller method
+    
     
 
     

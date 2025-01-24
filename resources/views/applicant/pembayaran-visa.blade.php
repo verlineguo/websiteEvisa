@@ -1,71 +1,106 @@
 @extends('applicant.layouts.layout-applicant')
+
 @section('content')
-<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-    <div class="mx-auto max-w-5xl">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Payment</h2>
+<div class="container mx-auto px-6 py-10">
+    <!-- Progress Bar -->
+    <div class="flex justify-center pb-8">
+        <div class="flex w-full max-w-4xl items-center">
+            @foreach ([ 
+                'applicant.uploadDP' => 'Data Pribadi', 
+                'applicant.upload-document.create' => 'Upload Dokumen', 
+                'applicant.uploadKV' => 'Keterangan Visa', 
+                'applicant.pembayaran-visa' => 'Pembayaran', 
+                'applicant.confirmation' => 'Konfirmasi' 
+            ] as $route => $label)
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full shadow {{ Request::routeIs($route) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' }} flex items-center justify-center font-bold">
+                        {{ $loop->iteration }}
+                    </div>
+                    <span class="ml-2 {{ Request::routeIs($route) ? 'text-blue-600 font-medium' : 'text-gray-500' }}">{{ $label }}</span>
+                </div>
+                @if (!$loop->last)
+                    <div class="flex-1 h-1 {{ Request::routeIs(array_keys(array_slice([ 
+                        'applicant.upload-document.create', 'applicant.review', 'applicant.payment', 'applicant.confirmation'], $loop->index))) ? 'bg-blue-600' : 'bg-gray-300' }} mx-2"></div>
+                @endif
+            @endforeach
+        </div>
+    </div>
 
-      <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
-        <form action="#" class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 lg:max-w-xl lg:p-8">
-          <div class="mb-6 grid grid-cols-2 gap-4">
-            <div class="col-span-2 sm:col-span-1">
-              <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Full name (as displayed on card)* </label>
-              <input type="text" id="full_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Bonnie Green" required />
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if(Session::has('error'))
+    <div class="alert alert-danger p2 px-32 text-red-500 text-xl">
+        {{ Session::get('error') }}
+    </div>
+    @elseif(Session::has('fail'))
+        <span class="alert alert-danger p2 px-32 text-red-500 text-xl">{{ Session::get('fail') }}</span>
+    @elseif(Session::has('success'))
+        <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
+    @endif
+
+  <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Payment</h2>
+
+        <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+          <!-- Payment Form -->
+          <form action="{{ route('applicant.pembayaran-visa') }}" method="POST" class="w-full rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-8 lg:max-w-xl">
+            @csrf
+            <div class="mb-6 grid grid-cols-2 gap-4">
+              <div class="col-span-2 sm:col-span-1">
+                <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Name </label>
+                <input type="text"  value="{{ $applicantSide->name ?? 'N/A' }}" disabled class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+              </div>
             </div>
 
-            <div class="col-span-2 sm:col-span-1">
-              <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Card number* </label>
-              <input type="text" id="card-number-input" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="xxxx-xxxx-xxxx-xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" required />
-            </div>
-          </div>
-
-          <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Pay now</button>
-        </form>
-
-        <div class="mt-6 grow sm:mt-8 lg:mt-0">
-          <div class="space-y-4 rounded-lg border border-gray-100 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-            <div class="space-y-2">
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">$6,592.00</dd>
-              </dl>
-
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Savings</dt>
-                <dd class="text-base font-medium text-green-500">-$299.00</dd>
-              </dl>
-
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Store Pickup</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">$99</dd>
-              </dl>
-
-              <dl class="flex items-center justify-between gap-4">
-                <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Tax</dt>
-                <dd class="text-base font-medium text-gray-900 dark:text-white">$799</dd>
-              </dl>
+            <div class="mb-6 grid grid-cols-2 gap-4">
+              <div class="col-span-2 sm:col-span-1">
+                <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Jenis Visa</label>
+                <input type="text" value="{{ $visaDetails->visa->jenisVisa ?? 'N/A' }}" disabled class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Visa Fee</label>
+                <input type="text" value="{{ $visaDetails->visa->fee ?? '0' }}" disabled class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" />
+              </div>
             </div>
 
-            <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-              <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-              <dd class="text-base font-bold text-gray-900 dark:text-white">$7,191.00</dd>
-            </dl>
-          </div>
+            <button type="submit" class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+              Pay now
+            </button>
+          </form>
 
-          <div class="mt-6 flex items-center justify-center gap-8">
-            <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal.svg" alt="" />
-            <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal-dark.svg" alt="" />
-            <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg" alt="" />
-            <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg" alt="" />
-            <img class="h-8 w-auto dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg" alt="" />
-            <img class="hidden h-8 w-auto dark:flex" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard-dark.svg" alt="" />
+          <!-- Payment Summary (Like a Receipt) -->
+          <div class="mt-8 p-4 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <div class="flex justify-between mb-4">
+              <span class="font-semibold text-sm text-gray-900 dark:text-white">Visa Fee</span>
+              <span class="text-sm text-gray-900 dark:text-white">{{ $visaDetails->visa->fee ?? '0' }}</span>
+            </div>
+            
+            <div class="flex justify-between mb-4">
+              <span class="font-semibold text-sm text-gray-900 dark:text-white">Tax (10%)</span>
+              <span class="text-sm text-gray-900 dark:text-white">{{ $tax ?? '0' }}</span>
+            </div>
+
+            <div class="flex justify-between mb-4">
+              <span class="font-semibold text-sm text-gray-900 dark:text-white">Total Payment</span>
+              <span class="text-sm text-gray-900 dark:text-white">{{ $totalAmount ?? '0' }}</span>
+            </div>
+
+            <div class="border-t-2 mt-4 pt-4 text-center">
+              <span class="text-sm font-semibold text-gray-900 dark:text-white">Thank you for your payment!</span>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
-  </div>
+  </section>
 </section>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
 @endsection

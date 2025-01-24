@@ -18,7 +18,6 @@ return new class extends Migration
             $table->dateTime('paymentDate');
             $table->boolean('paymentStatus');
             $table->foreign('idVisa')->references('idVisa')->on('visa_applicant');
-            $table->timestamps();
         });
     }
 

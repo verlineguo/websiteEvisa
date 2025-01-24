@@ -124,8 +124,10 @@ Route::controller(ApplicantSideController::class)->prefix('applicant')->group(fu
     Route::get('pengajuan-visa/upload-keterangan-visa', [ApplicantSideController::class, 'uploadKV'])->name('applicant.uploadKV');
     Route::post('pengajuan-visa/upload-keterangan-visa/store', [ApplicantSideController::class, 'storeKV'])->name('applicant.storeKV');
     Route::get('pengajuan-visa/upload-done', [ApplicantSideController::class, 'done'])->name('applicant.upload-done');
-    Route::get('status-pengajuan', action: 'statusPengajuan')->name('applicant.status-pengajuan');
-    Route::get('pembayaran-visa', 'pembayaranVisa')->name('applicant.pembayaran-visa');
+    Route::get('status-pengajuan', 'statusPengajuan')->name('applicant.status-pengajuan');
+    Route::get('/pembayaran-visa', [ApplicantSideController::class, 'showPaymentForm'])->name('applicant.pembayaran-visa');
+    Route::post('/pembayaran-visa', [ApplicantSideController::class, 'createPayment']);
+
 });
 
 

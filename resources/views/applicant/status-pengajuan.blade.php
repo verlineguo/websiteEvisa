@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php($no = 1)
+                        <!-- @php($no = 1)
                         @foreach ($employee as $row)
                         <tr>
                             <td>{{ $no++ }}</td>
@@ -35,7 +35,7 @@
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
-    </tr>
+    </tr> -->
     @endforeach
     </div>
 </div>

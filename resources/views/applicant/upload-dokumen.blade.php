@@ -8,7 +8,7 @@
             @foreach ([ 
                 'applicant.uploadDP' => 'Data Pribadi', 
                 'applicant.upload-document.create' => 'Upload Dokumen', 
-                'applicant.review' => 'Keterangan Visa', 
+                'applicant.uploadKV' => 'Keterangan Visa', 
                 'applicant.payment' => 'Pembayaran', 
                 'applicant.confirmation' => 'Konfirmasi' 
             ] as $route => $label)
@@ -26,10 +26,14 @@
         </div>
     </div>
 
-    @if(Session::has('success'))
-        <div class="p-4 mb-6 bg-green-100 border border-green-400 text-green-700 rounded">
-            <p>{{ Session::get('success') }}</p>
-        </div>
+    @if(Session::has('error'))
+    <div class="alert alert-danger p2 px-32 text-red-500 text-xl">
+        {{ Session::get('error') }}
+    </div>
+    @elseif(Session::has('fail'))
+        <span class="alert alert-danger p2 px-32 text-red-500 text-xl">{{ Session::get('fail') }}</span>
+    @elseif(Session::has('success'))
+        <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
     @endif
 
     @if ($errors->any())
@@ -41,8 +45,13 @@
             </ul>
         </div>
     @endif
+    <div class="flex items-center justify-end px-28">
+        <a href="{{ route('applicant.uploadKV') }}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white bg-blue-500 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        Selanjutnya &raquo;
+        </a>
+  </div>
 
-    <div class="bg-white shadow-lg rounded-lg p-8">
+    <div class="px-32 py-8">
         <h2 class="text-2xl font-semibold text-gray-900 mb-4">Upload Dokumen</h2>
         <p class="text-gray-600 mb-6">Silakan unggah dokumen yang diperlukan untuk pengajuan visa Anda.</p>
 
