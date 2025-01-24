@@ -78,7 +78,7 @@ class ApplicantSideController extends Controller
                 $filePath = $file->store('documents', 'public');
                 $uploadedDocuments[$idDoc] = $file->getClientOriginalName(); 
 
-                DB::statement('EXEC SP_createDocument ?, ?, ?', [
+                DB::statement('CALL SP_createDocument (?, ?, ?)', [
                     $idApplicant,
                     $idDoc,
                     $filePath,
@@ -132,7 +132,7 @@ class ApplicantSideController extends Controller
             
 
         try{
-            DB::statement('EXEC SP_updateApplicant ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+            DB::statement('CALL SP_updateApplicant (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $idApplicant,
                 $request->name,
                 $applicant->username,

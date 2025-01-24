@@ -13,6 +13,7 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\VisaApplicantController;
 use App\Http\Controllers\VisaController;
 use App\Http\Controllers\MainDocumentController;
+use App\Http\Controllers\PaymentController;
 
 Route::controller(EmployeeAuthController::class)->prefix('employee')->group(function () {
     Route::get('login', 'showLoginForm')->name('employee.login.form');
@@ -106,8 +107,15 @@ Route::controller(VisaApplicantController::class)->prefix('admin/visaApplicant')
     Route::get('documents/{idVisa}', 'viewDocuments')->name('admin.visaApplicant.documents');
     Route::get('showApplicationProcess/{idVisa}', 'showApplicationProcess')->name('admin.visaApplicant.applicationProcess');
     Route::get('checkName', 'checkName')->name('admin.visaApplicant.checkName');
-
+    
 });
+
+Route::controller(PaymentController::class)->prefix('admin/payment')->group(function () {
+    Route::get('', 'index')->name('admin.payment.index');
+    Route::get('edit/{idPayment}', 'edit')->name('admin.payment.edit');
+    Route::put('edit/{idPayment}', 'update')->name('admin.payment.create.update');
+});
+
 
 Route::controller(ApplicantSideController::class)->prefix('applicant')->group(function () {
     Route::get('home',  [ApplicantSideController::class, 'home'])->name('applicant.home');

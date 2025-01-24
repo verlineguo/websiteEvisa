@@ -32,6 +32,7 @@ class VisaApplicant extends Model
     {
         return $this->belongsTo(Visa::class, 'idFee', 'idFee');
     }
+}
 
     
 
@@ -39,4 +40,3 @@ class VisaApplicant extends Model
     // {
     //     return $this->hasMany(Payment::class, 'idVisa', 'idVisa');
     // }
-}

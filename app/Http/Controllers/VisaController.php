@@ -27,7 +27,7 @@ class VisaController extends Controller
             'fee' => 'required|integer|min:0',
         ]);
         
-        DB::statement('EXEC SP_createVisa ?, ?, ?', [
+        DB::statement('CALL SP_createVisa (?, ?, ?)', [
             $request->jenisVisa,
             $request->idCountry,
             $request->fee,
@@ -44,7 +44,7 @@ class VisaController extends Controller
 
     public function update(Request $request, $idFee)
     {
-        DB::statement('EXEC SP_updateVisa ?, ?, ?, ?', [
+        DB::statement('CALL SP_updateVisa (?, ?, ?, ?)', [
             $idFee,
             $request->jenisVisa,
             $request->idCountry,
@@ -55,7 +55,7 @@ class VisaController extends Controller
     }
     public function delete($idFee)
     {
-        DB::statement('EXEC SP_DeleteVisa ?', [$idFee]);
+        DB::statement('CALL SP_DeleteVisa (?)', [$idFee]);
         return redirect()->route('admin.visa.index')->with('success', 'Visa deleted successfully.');
     } 
     

@@ -23,7 +23,7 @@ class CountryController extends Controller
 
     public function save(Request $request)
     {
-        DB::statement('EXEC SP_createCountry ?', [
+        DB::statement('CALL SP_createCountry (?)', [
             $request->countryName,
             
         ]);

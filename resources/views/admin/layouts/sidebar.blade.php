@@ -38,6 +38,11 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Visa Application</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.payment.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Payment</span></a>
+    </li>
     
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

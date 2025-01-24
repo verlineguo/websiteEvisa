@@ -23,7 +23,7 @@ class DocTypeController extends Controller
 
     public function save(Request $request)
 {
-    DB::statement('EXEC SP_createDocType ?', [
+    DB::statement('CALL SP_createDocType (?)', [
         $request->dType,
     ]);
 
@@ -43,7 +43,7 @@ class DocTypeController extends Controller
             'dType' => 'required|string|max:50',
         ]);
 
-        DB::statement('EXEC SP_updateDocType ?, ?', [
+        DB::statement('CALL SP_updateDocType (?, ?)', [
             $idDoc,
             $request->dType,
         ]);
@@ -53,7 +53,7 @@ class DocTypeController extends Controller
 
     public function delete($idDoc)
     {
-        DB::statement('EXEC SP_deleteDocType ?', [
+        DB::statement('CALL SP_deleteDocType (?)', [
             $idDoc,
         ]);
 

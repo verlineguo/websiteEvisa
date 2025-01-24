@@ -31,7 +31,7 @@ class MainDocumentController extends Controller
     public function approveDocument($documentNo)
     {
         try {
-            DB::statement('EXEC SP_approveDocument ?', [$documentNo]);
+            DB::statement('CALL SP_approveDocument (?)', [$documentNo]);
             return redirect()->route('consultant.document.index')->with('success', 'Document approved successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('fail', $e->getMessage());
@@ -68,7 +68,7 @@ class MainDocumentController extends Controller
                 ? $request->file('filePath')->store('documents', 'public')
                 : MainDocument::find($documentNo)->filePath;
 
-            DB::statement('EXEC SP_updateDocument ?, ?, ?, ?, ?', [
+            DB::statement('CALL SP_updateDocument (?, ?, ?, ?, ?)', [
                 $documentNo,
                 $request->idApplicant,
                 $request->documentType,
@@ -84,7 +84,7 @@ class MainDocumentController extends Controller
 
     public function adminDelete($documentNo)
     {
-        DB::statement('EXEC SP_deleteDocument ?', [$documentNo]);
+        DB::statement('CALL SP_deleteDocument (?)', [$documentNo]);
 
         return redirect()->route('admin.document.index')->with('success', 'Document deleted successfully.');
     }

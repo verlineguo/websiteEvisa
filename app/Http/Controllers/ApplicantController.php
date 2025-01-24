@@ -37,7 +37,7 @@ public function create()
     public function save(Request $request)
     {
 
-        DB::statement('EXEC SP_createApplicant ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_createApplicant (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $request->name,
             $request->username,
             bcrypt($request->password),
@@ -62,7 +62,7 @@ public function create()
 
     public function update(Request $request, $idApplicant)
     {
-        DB::statement('EXEC SP_updateApplicant ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?', [
+        DB::statement('CALL SP_updateApplicant (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $idApplicant,
             $request->name,
             $request->username,
@@ -80,7 +80,7 @@ public function create()
 
     public function delete($idApplicant)
     {
-        DB::statement('EXEC SP_deleteApplicant ?', [$idApplicant]);
+        DB::statement('CALL SP_deleteApplicant (?)', [$idApplicant]);
 
         return redirect()->route('admin.applicant.index')->with('success', 'Applicant deleted successfully.');
     }
