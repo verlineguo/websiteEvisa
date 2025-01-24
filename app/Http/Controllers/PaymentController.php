@@ -21,11 +21,9 @@ class PaymentController extends Controller
     public function edit($idPayment)
     {
         $visaApplicant = VisaApplicant::all();
-        $payment = Payment::with('visaApplicant')->find($idPayment); 
-        if (!$payment) {
-            return redirect()->route('admin.payment.index')->with('error', 'Payment not found');
-        }
-        return view('admin.payment.form', ['payment' => $payment, 'visaApplicant' => $visaApplicant]);
+        $payment =Payment::findOrFail($idPayment);
+        
+        return view('admin.payment.form', compact('payment', 'visaApplicant'));
     }
 
     public function updateStatus(Request $request, $idPayment)

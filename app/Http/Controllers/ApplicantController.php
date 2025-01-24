@@ -16,7 +16,7 @@ class ApplicantController extends Controller
     {
         $user = Auth::guard('employee')->user();
         if (!$user) {
-            return redirect()->route('customer.login')->with('error', 'You must be logged in to access this page.');
+            return redirect()->route('applicant.login')->with('error', 'You must be logged in to access this page.');
         }
         if ($user->role == 1) { 
             $applicant = Applicant::all()->toArray();

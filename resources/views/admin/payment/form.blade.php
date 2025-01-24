@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
-@section('title', 'Form edit payment')
+@section('title', content: 'Form edit payment')
 
 @section('content')
-<form action="{{route('admin.payment.updateStatus', $payment->idPayment)}}" method="POST">
+<form action="{{route('admin.payment.updateStatus', $payment->idPayment)}}" method="GET">
   @csrf
   @method('PUT') <!-- This specifies that the form should use the PUT method -->
   <div class="row">

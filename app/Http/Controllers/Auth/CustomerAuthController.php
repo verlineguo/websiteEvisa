@@ -37,9 +37,9 @@ class CustomerAuthController extends Controller
             null,
             null,
             null,
-            null,
+            null
         ]);
-        return redirect()->route('customer.login')->with('success', 'Registrasi berhasil. Silakan login.');
+        return redirect()->route('applicant.login')->with('success', 'Registrasi berhasil. Silakan login.');
 
 
 

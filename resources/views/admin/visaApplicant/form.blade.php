@@ -4,7 +4,7 @@
 <form action="{{ isset($visaApplicant) ? route('admin.visaApplicant.create.update', $visaApplicant->idVisa) : route('admin.visaApplicant.create.save') }}" method="post">
     @csrf
     @if (isset($visaApplicant))
-        @method('PUT')
+        @method('put')
     @endif
     <div class="row">
         <div class="col-12">
