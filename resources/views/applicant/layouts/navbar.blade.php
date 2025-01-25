@@ -10,7 +10,6 @@
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a class="mr-3" href="{{ route('applicant.home') }}">Home</a>
             <a class="mr-7" href="{{ route('applicant.uploadDP') }}">Pengajuan Visa</a>
-            <a href="{{ route('applicant.status-pengajuan') }}">Status Pengajuan</a>
           </div>
         </div>
       </div>
