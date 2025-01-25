@@ -22,27 +22,115 @@ Route::controller(EmployeeAuthController::class)->prefix('employee')->group(func
     Route::post('logout', 'logout')->name('employee.logout');
 });
 
-Route::middleware(['auth:employee'])->prefix('')->group(function () {
-    Route::get('admin/dashboard',[DashboardController::class, 'adminDashboard'])
-    ->name('admin.dashboard');
+// Middleware for Employee Authentication
+Route::middleware(['auth:employee'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 
-    Route::get('consultant/dashboard',[DashboardController::class, 'consultantDashboard'])
-    ->name('consultant.dashboard');
+        Route::prefix('applicant')->controller(ApplicantController::class)->group(function () {
+            Route::get('', 'index')->name('admin.applicant.index');
+            Route::get('create', 'create')->name('admin.applicant.create');
+            Route::post('create', 'save')->name('admin.applicant.create.save');
+            Route::get('edit/{idApplicant}', 'edit')->name('admin.applicant.edit');
+            Route::put('edit/{idApplicant}', 'update')->name('admin.applicant.create.update');
+            Route::delete('delete/{idApplicant}', 'delete')->name('admin.applicant.delete');
+            Route::get('detail/{idApplicant}', 'detail')->name('admin.applicant.detail');
+            Route::get('detail/show/{idApplicant}', 'show')->name('admin.applicant.detail.show');
+        });
+
+        Route::prefix('employee')->controller(EmployeeController::class)->group(function () {
+            Route::get('', 'index')->name('admin.employee.index');
+            Route::get('create', 'create')->name('admin.employee.create');
+            Route::post('create', 'save')->name('admin.employee.create.save');
+            Route::get('edit/{idEmp}', 'edit')->name('admin.employee.edit');
+            Route::put('edit/{idEmp}', 'update')->name('admin.employee.create.update');
+            Route::delete('delete/{idEmp}', 'delete')->name('admin.employee.delete');
+        });
+
+        Route::prefix('country')->controller(CountryController::class)->group(function () {
+            Route::get('', 'index')->name('admin.country.index');
+            Route::get('create', 'create')->name('admin.country.create');
+            Route::post('create', 'save')->name('admin.country.create.save');
+            Route::get('edit/{idCountry}', 'edit')->name('admin.country.edit');
+            Route::put('edit/{idCountry}', 'update')->name('admin.country.create.update');
+            Route::delete('delete/{idCountry}', 'delete')->name('admin.country.delete');
+        });
+
+        Route::prefix('docType')->controller(DocTypeController::class)->group(function () {
+            Route::get('', 'index')->name('admin.docType.index');
+            Route::get('create', 'create')->name('admin.docType.create');
+            Route::post('create', 'save')->name('admin.docType.create.save');
+            Route::get('edit/{idDoc}', 'edit')->name('admin.docType.edit');
+            Route::put('edit/{idDoc}', 'update')->name('admin.docType.create.update');
+            Route::delete('delete/{idDoc}', 'delete')->name('admin.docType.delete');
+        });
+
+        Route::prefix('visa')->controller(VisaController::class)->group(function () {
+            Route::get('', 'index')->name('admin.visa.index');
+            Route::get('create', 'create')->name('admin.visa.create');
+            Route::post('create', 'save')->name('admin.visa.create.save');
+            Route::get('edit/{idFee}', 'edit')->name('admin.visa.edit');
+            Route::put('edit/{idFee}', 'update')->name('admin.visa.create.update');
+            Route::delete('delete/{idFee}', 'delete')->name('admin.visa.delete');
+        });
+
+        Route::prefix('visaApplicant')->controller(VisaApplicantController::class)->group(function () {
+            Route::get('', 'index')->name('admin.visaApplicant.index');
+            Route::get('create', 'create')->name('admin.visaApplicant.create');
+            Route::post('create', 'save')->name('admin.visaApplicant.create.save');
+            Route::get('edit/{idVisa}', 'edit')->name('admin.visaApplicant.edit');
+            Route::put('edit/{idVisa}', 'update')->name('admin.visaApplicant.create.update');
+            Route::delete('delete/{idVisa}', 'delete')->name('admin.visaApplicant.delete');
+            Route::get('detail/{idVisa}', 'detail')->name('admin.visaApplicant.detail');
+            Route::get('documents/{idVisa}', 'viewDocuments')->name('admin.visaApplicant.documents');
+            Route::get('showApplicationProcess/{idVisa}', 'showApplicationProcess')->name('admin.visaApplicant.applicationProcess');
+            Route::get('checkName', 'checkName')->name('admin.visaApplicant.checkName');
+        });
+
+        Route::prefix('document')->controller(MainDocumentController::class)->group(function () {
+            Route::get('', 'employeeIndex')->name('admin.document.index');
+            Route::get('create', 'adminCreate')->name('admin.document.create');
+            Route::get('edit/{documentNo}', 'adminEdit')->name('admin.document.edit');
+            Route::put('edit/{documentNo}', 'adminUpdate')->name('admin.document.update');
+            Route::delete('delete/{documentNo}', 'adminDelete')->name('admin.document.delete');
+        });
+    });
+
+    Route::prefix('consultant/document')->group(function () {
+        Route::get('', [MainDocumentController::class, 'employeeIndex'])->name('consultant.document.index');
+        Route::post('approve/{documentNo}', [MainDocumentController::class, 'approveDocument'])->name('consultant.document.approve');
+    });
 });
 
-
+// Customer Authentication Route
 Route::controller(CustomerAuthController::class)->prefix('applicant')->group(function () {
     Route::get('register', 'showRegisterForm')->name('applicant.register.form');
 	Route::post('register', 'register')->name('applicant.register');
 	Route::get('login', 'showLoginForm')->name('applicant.login.form');
 	Route::post('login', 'login')->name('applicant.login');
 	Route::get('logout', 'logout')->name('applicant.logout');
+    
 });
 
+// Middleware for Customer Authentication
 Route::middleware(['auth:customer'])->group(function () {
     Route::get('/applicant/home',[ApplicantSideController::class, 'home'])
     ->name('applicant.home');
+    Route::prefix('applicant')->group(function () {
+        Route::get('home', [ApplicantSideController::class, 'home'])->name('applicant.home');
+        Route::get('upload-dokumen/create', [ApplicantSideController::class, 'uploadDoc'])->name('applicant.upload-document.create');
+        Route::post('upload-dokumen/store', [ApplicantSideController::class, 'storeDoc'])->name('applicant.upload-document.store');
+        Route::get('pengajuan-visa/upload-data-pribadi', [ApplicantSideController::class, 'uploadDP'])->name('applicant.uploadDP');
+        Route::post('pengajuan-visa/upload-data-pribadi/store/{idApplicant}', [ApplicantSideController::class, 'storeApplicant'])->name('applicant.uploadDP.store');
+        Route::get('pengajuan-visa/upload-keterangan-visa', [ApplicantSideController::class, 'uploadKV'])->name('applicant.uploadKV');
+        Route::post('pengajuan-visa/upload-keterangan-visa/store', [ApplicantSideController::class, 'storeKV'])->name('applicant.storeKV');
+        Route::get('pengajuan-visa/upload-done', [ApplicantSideController::class, 'done'])->name('applicant.upload-done');
+        Route::get('status-pengajuan', [ApplicantSideController::class, 'statusPengajuan'])->name('applicant.status-pengajuan');
+        Route::get('/pembayaran-visa', [ApplicantSideController::class, 'showPaymentForm'])->name('applicant.pembayaran-visa');
+        Route::post('/pembayaran-visa', [ApplicantSideController::class, 'createPayment']);
+    });
 });
+
 
 Route::controller(ApplicantController::class)->prefix('admin/applicant')->group(function () {
     Route::get('', 'index')->name('admin.applicant.index');
