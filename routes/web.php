@@ -15,7 +15,7 @@ use App\Http\Controllers\VisaApplicantController;
 use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\Auth\EmployeeAuthController;
 use App\Http\Controllers\ApplicationProcessController;
-
+use App\Http\Controllers\LogAdminController;
 
 Route::controller(EmployeeAuthController::class)->prefix('employee')->group(function () {
     Route::get('login', 'showLoginForm')->name('employee.login.form');
@@ -221,6 +221,9 @@ Route::controller(PaymentController::class)->prefix('admin/payment')->group(func
     Route::delete('delete/{idPayment}', 'delete')->name('admin.payment.delete');
 });
 
+Route::controller(LogAdminController::class)->prefix('admin/logadmin')->group(function () {
+    Route::get('', 'index')->name('admin.logadmin.index');
+});
 
 
 Route::controller(ApplicantSideController::class)->prefix('applicant')->group(function () {

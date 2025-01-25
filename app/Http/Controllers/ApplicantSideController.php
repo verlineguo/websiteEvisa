@@ -210,6 +210,7 @@ class ApplicantSideController extends Controller
         return view('applicant.pembayaran-visa', compact('visaDetails', 'visaFee', 'tax', 'totalAmount', 'applicantSide'));
 
     }
+    
     public function createPayment()
     {
         $idApplicant = Auth::guard('customer')->user()->idApplicant;

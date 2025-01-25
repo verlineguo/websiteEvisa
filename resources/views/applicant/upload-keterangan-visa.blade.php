@@ -6,8 +6,8 @@
           'applicant.uploadDP' => 'Data Pribadi', 
           'applicant.upload-document.create' => 'Upload Dokumen', 
           'applicant.uploadKV' => 'Keterangan Visa', 
-          'applicant.payment' => 'Pembayaran', 
-          'applicant.confirmation' => 'Selesai' 
+          'applicant.pembayaran-visa' => 'Pembayaran', 
+          'applicant.upload-done' => 'Selesai' 
       ] as $route => $label)
           <div class="flex items-center">
               <div class="w-10 h-10 rounded-full shadow {{ Request::routeIs($route) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' }} flex items-center justify-center font-bold">
