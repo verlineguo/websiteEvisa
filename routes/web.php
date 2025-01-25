@@ -29,6 +29,8 @@ Route::middleware(['auth:employee'])->prefix('')->group(function () {
 
     Route::get('consultant/dashboard',[DashboardController::class, 'consultantDashboard'])
     ->name('consultant.dashboard');
+});
+
 // Middleware for Employee Authentication
 Route::middleware(['auth:employee'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -141,7 +143,7 @@ Route::middleware(['auth:customer'])->group(function () {
     });
 });
 
-<<<<<<< Updated upstream
+
 Route::controller(ApplicantController::class)->prefix('admin/applicant')->group(function () {
     Route::get('', 'index')->name('admin.applicant.index');
     Route::get('create', 'create')->name('admin.applicant.create');
@@ -280,7 +282,3 @@ Route::middleware(['auth:customer'])->prefix('applicant')->group(function () {
     Route::get('upload-dokumen/create', [ApplicantSideController::class, 'uploadDoc'])->name('applicant.upload-document.create');
     Route::post('upload-dokumen/store', [ApplicantSideController::class, 'storeDoc'])->name('applicant.upload-document.store');
 });
-
-
-=======
->>>>>>> Stashed changes

@@ -10,7 +10,7 @@
                 'applicant.upload-document.create' => 'Upload Dokumen', 
                 'applicant.uploadKV' => 'Keterangan Visa', 
                 'applicant.pembayaran-visa' => 'Pembayaran', 
-                'applicant.confirmation' => 'Konfirmasi' 
+                'applicant.confirmation' => 'Selesai' 
             ] as $route => $label)
                 <div class="flex items-center">
                     <div class="w-10 h-10 rounded-full shadow {{ Request::routeIs($route) ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-600' }} flex items-center justify-center font-bold">
@@ -44,7 +44,12 @@
     @elseif(Session::has('success'))
         <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
     @endif
-
+    <div class="flex items-center justify-end px-28 ">
+      <a href="{{ route('applicant.upload-done') }}" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white bg-blue-500 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        Selanjutnya &raquo;
+      </a>
+    </div>
+    
   <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <div class="mx-auto max-w-5xl">
@@ -76,6 +81,7 @@
               Pay now
             </button>
           </form>
+          
 
           <!-- Payment Summary (Like a Receipt) -->
           <div class="mt-8 p-4 rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -99,6 +105,10 @@
             </div>
           </div>
         </div>
+        <br>
+        <a href="{{ route('applicant.uploadKV') }}" class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+          Kembali
+      </a>
       </div>
     </div>
   </section>

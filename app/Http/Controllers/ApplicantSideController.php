@@ -90,7 +90,8 @@ class ApplicantSideController extends Controller
     
     public function done()
     {
-        return view('applicant.upload-done');
+        $applicantSide = Auth::guard('customer')->user(); 
+        return view('applicant.upload-done', compact('applicantSide'));
     }
 
     public function statusPengajuan()

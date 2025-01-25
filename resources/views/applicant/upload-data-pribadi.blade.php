@@ -8,9 +8,9 @@
             @foreach ([ 
                 'applicant.uploadDP' => 'Data Pribadi', 
                 'applicant.upload-document.create' => 'Upload Dokumen', 
-                'applicant.review' => 'Keterangan Visa', 
+                'applicant.uploadKV' => 'Keterangan Visa', 
                 'applicant.payment' => 'Pembayaran', 
-                'applicant.confirmation' => 'Konfirmasi' 
+                'applicant.confirmation' => 'Selesai' 
             ] as $route => $label)
                 <div class="flex items-center">
                     <div class="w-10 h-10 rounded-full {{ Request::routeIs($route) ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500' }} flex items-center justify-center font-bold">
@@ -46,8 +46,6 @@
     </div>
     @elseif(Session::has('fail'))
         <span class="alert alert-danger p2 px-32 text-red-500 text-xl">{{ Session::get('fail') }}</span>
-    @elseif(Session::has('success'))
-        <span class="alert alert-success p2 px-32 text-green-500 text-xl">{{ Session::get('success') }}</span>
     @endif
 
 
